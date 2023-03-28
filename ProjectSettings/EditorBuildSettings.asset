@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/DepthMap/RenderDepthMapScene.unity
+    guid: 0e7d39040109c5346999afc947ca9d38
   m_configObjects: {}
