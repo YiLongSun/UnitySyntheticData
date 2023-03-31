@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AutoCapture : MonoBehaviour
+public class Automation : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -20,18 +20,16 @@ public class AutoCapture : MonoBehaviour
 
     void Func_1()
     {
-        this.GetComponent<InstantiateDefects>().Instantiate();
-        this.GetComponent<InstantiateDefects>().Instantiate();
-        this.GetComponent<InstantiateDefects>().Instantiate();
+        this.GetComponent<Creator>().Create_Defects();
     }
 
     void Func_2()
     {
-        this.GetComponent<CaptureImages>().Capture();
+        this.GetComponent<Capture>().CaptureImage();
     }
 
     void Func_3()
     {
-        this.GetComponent<ResetEnvironment>().Reset();
+        this.GetComponent<Reset>().ResetEnvironment();
     }
 }

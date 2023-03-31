@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ResetEnvironment : MonoBehaviour
+public class Reset : MonoBehaviour
 {
-    public void Reset()
+    public void ResetEnvironment()
     {
         SceneManager.LoadScene(0);
     }

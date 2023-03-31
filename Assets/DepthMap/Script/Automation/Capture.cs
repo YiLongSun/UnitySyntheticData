@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class CaptureImages : MonoBehaviour
+public class Capture : MonoBehaviour
 {
     public Camera[] cameras;
-    public string savePath = "D:/Data/Codes/UnitySyntheticData/DepthOutputs/";
+    public string savePath = "D:/Data/Codes/UnitySyntheticData/Outs/";
 
     private int width = 1280; // change this to match your desired capture resolution
     private int height = 960; // change this to match your desired capture resolution
 
-    public void Capture()
+    public void CaptureImage()
     {
-        string timestamp = System.DateTime.Now.ToString("yyyyMMddHHmmssfff");
+        string timestamp = System.DateTime.Now.ToString("HHmmssfff");
         for (int i = 0; i < cameras.Length; i++)
         {
             // create a new render texture
