@@ -393,16 +393,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 124027221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca6a0f24f53998443bbd3b728cf44003, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a8e6a4d8482474428972799719485a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameras:
-  - {fileID: 95478812}
-  - {fileID: 598654529}
-  - {fileID: 468352566}
-  prefab_object: {fileID: 1377031878870811186, guid: 897e4ad8da6ca384280c6198866f9327, type: 3}
-  prefab_ball: {fileID: 5057336815977168319, guid: 77dc355267f687841a9010494d3e9ba9, type: 3}
-  prefab_light: {fileID: 6242940809229149342, guid: 08e48700782ff0a4abf0600d47051642, type: 3}
+  inductor_base: {fileID: 3427094997562433447, guid: e430e77356defdc4db388bd44503d92e, type: 3}
+  alumni_base: {fileID: 3511764047535137480, guid: 54e31709899436147a94559ac01f8e7e, type: 3}
+  alumni_cube: {fileID: 7685309190739164491, guid: 8d5536cf098d9fb499bf8b83213c9a1a, type: 3}
+  alumni_top: {fileID: 5486415382504454257, guid: 90b19300bf3c9d54aad8d0481289c8bf, type: 3}
 --- !u!1 &468352564
 GameObject:
   m_ObjectHideFlags: 0
