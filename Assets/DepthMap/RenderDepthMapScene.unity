@@ -327,6 +327,7 @@ GameObject:
   - component: {fileID: 124027223}
   - component: {fileID: 124027222}
   - component: {fileID: 124027225}
+  - component: {fileID: 124027226}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -400,6 +401,23 @@ MonoBehaviour:
   alumni_base: {fileID: 3511764047535137480, guid: 54e31709899436147a94559ac01f8e7e, type: 3}
   alumni_cube: {fileID: 7685309190739164491, guid: 8d5536cf098d9fb499bf8b83213c9a1a, type: 3}
   alumni_top: {fileID: 5486415382504454257, guid: 90b19300bf3c9d54aad8d0481289c8bf, type: 3}
+  prefab_light: {fileID: 6242940809229149342, guid: 08e48700782ff0a4abf0600d47051642, type: 3}
+--- !u!114 &124027226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124027221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90affc6387fd1d8499f7f6dbd2f11d16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameras:
+  - {fileID: 95478812}
+  - {fileID: 598654529}
+  - {fileID: 468352566}
 --- !u!1 &468352564
 GameObject:
   m_ObjectHideFlags: 0
