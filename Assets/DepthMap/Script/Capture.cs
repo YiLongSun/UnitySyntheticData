@@ -12,7 +12,6 @@ public class Capture : MonoBehaviour
     private string referenceDepthPath = "reference_depth/";
     private string referenceRGBPath = "reference_rgb/";
     private string queryRGBPath = "query_rgb/";
-    private string referenceLabel = "reference_label/";
     private string imageFormat = ".png";
 
     private int width = 1280;
@@ -86,5 +85,43 @@ public class Capture : MonoBehaviour
     public void CaptureLabels(string timestamp)
     {
         GameObject[] DefectsCube = GameObject.FindGameObjectsWithTag("DefectsCube");
+        GameObject[] DefectsTop = GameObject.FindGameObjectsWithTag("DefectsTop");
+        Vector3[] DefectsTopPixelPos = GetObjectPosition(DefectsTop);
+        Vector3[] DefectsCubePixelPos = GetObjectPosition(DefectsCube);
+    }
+
+    public Vector3[] GetObjectPosition(GameObject[] objects)
+    {
+        Vector3[] screenpositions = new Vector3[objects.Length*8];
+
+        for(int i=0;i<objects.Length;i++)
+        {
+            Vector3[] edges = new Vector3[8];
+            edges[0] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+            edges[1] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+            edges[2] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+            edges[3] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+            edges[4] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+            edges[5] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+            edges[6] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+            edges[7] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+
+            for (int j = 0; j < edges.Length; j++)
+            {
+                edges[j] = RotatePointAroundPivot(edges[j], objects[i].transform.position, objects[i].transform.eulerAngles);
+                screenpositions[i*8+j] = cameras[1].WorldToScreenPoint(edges[j]);
+                Debug.Log(screenpositions[i * 8 + j]);
+            }
+        }
+
+        return screenpositions;
+    }
+
+    public Vector3 RotatePointAroundPivot(Vector3 point, Vector3 pivot, Vector3 angles)
+    {
+        Vector3 dir = point - pivot;
+        dir = Quaternion.Euler(angles) * dir;
+        point = dir + pivot;
+        return point;
     }
 }
