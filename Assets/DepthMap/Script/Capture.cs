@@ -80,63 +80,11 @@ public class Capture : MonoBehaviour
             }
         }
 
-        GameObject[] defects = GameObject.FindGameObjectsWithTag("Defects");
-        Texture2D maskTexture = new Texture2D(1280, 960);
+        CaptureLabels(timestamp);
+    }
 
-        foreach (GameObject defect in defects)
-        {
-            Vector3 defectScale = defect.transform.localScale;
-            Vector3[] scales_x = new Vector3[2];
-            Vector3[] scales_y = new Vector3[2];
-            Vector3[] scales_z = new Vector3[2];
-            scales_x[0] = new Vector3(defectScale.x/2, 0, 0);
-            scales_x[1] = new Vector3(-defectScale.x/2, 0, 0);
-            scales_y[0] = new Vector3(0, defectScale.y/2, 0);
-            scales_y[1] = new Vector3(0, -defectScale.y/2, 0);
-            scales_z[0] = new Vector3(0, 0, defectScale.z/2);
-            scales_z[1] = new Vector3(0, 0, -defectScale.z/2);
-
-            Vector3[] edges = new Vector3[8];
-
-            for (int i = 0; i < 2; i++)
-            {
-                for (int j = 0; j < 2; j++)
-                {
-                    for (int k = 0; k < 2; k++)
-                    {
-                        edges[i*4 + j*2 + k] = new Vector3(defect.transform.position.x + scales_x[i].x, defect.transform.position.y + scales_y[j].y , defect.transform.position.z + scales_z[k].z);
-                        Debug.Log(edges[i*4 + j*2 + k]);
-                    }
-                }
-            }
-
-            Vector3[] screenpositions = new Vector3[8];
-            for (int l=0; l<8; l++)
-            {
-                screenpositions[l] = cameras[1].WorldToScreenPoint(edges[l]);
-            }
-
-
-
-
-            // Set all pixels to black
-            for (int x = 0; x < maskTexture.width; x++)
-            {
-                for (int y = 0; y < maskTexture.height; y++)
-                {
-                    maskTexture.SetPixel(x, y, Color.black);
-                }
-            }
-
-            // Draw white pixels at line points
-            foreach (Vector3 screenposition in screenpositions)
-            {
-                maskTexture.SetPixel((int)screenposition.x, (int)screenposition.y, Color.white);
-            }
-        }
-
-        byte[] bytes_label = maskTexture.EncodeToPNG();
-        string filename_label = savePath + referenceLabel + timestamp + imageFormat;
-        File.WriteAllBytes(filename_label, bytes_label);
+    public void CaptureLabels(string timestamp)
+    {
+        GameObject[] DefectsCube = GameObject.FindGameObjectsWithTag("DefectsCube");
     }
 }
