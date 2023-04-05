@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Capture : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Capture : MonoBehaviour
     private string referenceDepthPath = "reference_depth/";
     private string referenceRGBPath = "reference_rgb/";
     private string queryRGBPath = "query_rgb/";
+    private string referenceLabelPath = "reference_label/";
     private string imageFormat = ".png";
 
     private int width = 1280;
@@ -20,6 +22,7 @@ public class Capture : MonoBehaviour
     void Start()
     {
         Invoke("CaptureImages", 5.0f);
+        Invoke("ResetScene", 8.0f);
     }
 
     void Update()
@@ -88,6 +91,14 @@ public class Capture : MonoBehaviour
         GameObject[] DefectsTop = GameObject.FindGameObjectsWithTag("DefectsTop");
         Vector3[] DefectsTopPixelPos = GetObjectPosition(DefectsTop);
         Vector3[] DefectsCubePixelPos = GetObjectPosition(DefectsCube);
+
+        // Save as txt file
+        string filename = savePath + referenceLabelPath + timestamp + ".json";
+        DefectsData data = new DefectsData();
+        data.DefectsTopPixelPos = DefectsTopPixelPos;
+        data.DefectsCubePixelPos = DefectsCubePixelPos;
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(filename, json);
     }
 
     public Vector3[] GetObjectPosition(GameObject[] objects)
@@ -123,5 +134,17 @@ public class Capture : MonoBehaviour
         dir = Quaternion.Euler(angles) * dir;
         point = dir + pivot;
         return point;
+    }
+
+    [System.Serializable]
+    public class DefectsData
+    {
+        public Vector3[] DefectsTopPixelPos;
+        public Vector3[] DefectsCubePixelPos;
+    }
+
+    public void ResetScene()
+    {
+        SceneManager.LoadScene(0);
     }
 }
