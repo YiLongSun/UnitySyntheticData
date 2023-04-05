@@ -89,8 +89,8 @@ public class Capture : MonoBehaviour
     {
         GameObject[] DefectsCube = GameObject.FindGameObjectsWithTag("DefectsCube");
         GameObject[] DefectsTop = GameObject.FindGameObjectsWithTag("DefectsTop");
-        Vector3[] DefectsTopPixelPos = GetObjectPosition(DefectsTop);
-        Vector3[] DefectsCubePixelPos = GetObjectPosition(DefectsCube);
+        Vector3[] DefectsTopPixelPos = GetObjectPosition(DefectsTop, "DefectsTop");
+        Vector3[] DefectsCubePixelPos = GetObjectPosition(DefectsCube, "DefectsCube");
 
         // Save as txt file
         string filename = savePath + referenceLabelPath + timestamp + ".json";
@@ -101,29 +101,56 @@ public class Capture : MonoBehaviour
         File.WriteAllText(filename, json);
     }
 
-    public Vector3[] GetObjectPosition(GameObject[] objects)
+    public Vector3[] GetObjectPosition(GameObject[] objects, string category)
     {
         Vector3[] screenpositions = new Vector3[objects.Length*8];
 
-        for(int i=0;i<objects.Length;i++)
+        if (category == "DefectsCube")
         {
-            Vector3[] edges = new Vector3[8];
-            edges[0] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
-            edges[1] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
-            edges[2] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
-            edges[3] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
-            edges[4] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
-            edges[5] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
-            edges[6] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
-            edges[7] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
-
-            for (int j = 0; j < edges.Length; j++)
+            for(int i=0;i<objects.Length;i++)
             {
-                edges[j] = RotatePointAroundPivot(edges[j], objects[i].transform.position, objects[i].transform.eulerAngles);
-                screenpositions[i*8+j] = cameras[1].WorldToScreenPoint(edges[j]);
-                Debug.Log(screenpositions[i * 8 + j]);
+                Vector3[] edges = new Vector3[8];
+                edges[0] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+                edges[1] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+                edges[2] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+                edges[3] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+                edges[4] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+                edges[5] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+                edges[6] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, -objects[i].transform.localScale.z / 2);
+                edges[7] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, objects[i].transform.localScale.y / 2, objects[i].transform.localScale.z / 2);
+
+                for (int j = 0; j < edges.Length; j++)
+                {
+                    edges[j] = RotatePointAroundPivot(edges[j], objects[i].transform.position, objects[i].transform.eulerAngles);
+                    screenpositions[i*8+j] = cameras[1].WorldToScreenPoint(edges[j]);
+                    Debug.Log(screenpositions[i * 8 + j]);
+                }
             }
         }
+        else if (category == "DefectsTop")
+        {
+            for(int i=0;i<objects.Length;i++)
+            {
+                Vector3[] edges = new Vector3[8];
+                edges[0] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -(objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), -objects[i].transform.localScale.z / 2);
+                edges[1] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, -(objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), objects[i].transform.localScale.z / 2);
+                edges[2] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, (objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), -objects[i].transform.localScale.z / 2);
+                edges[3] = objects[i].transform.position + new Vector3(-objects[i].transform.localScale.x / 2, (objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), objects[i].transform.localScale.z / 2);
+                edges[4] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -(objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), -objects[i].transform.localScale.z / 2);
+                edges[5] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, -(objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), objects[i].transform.localScale.z / 2);
+                edges[6] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, (objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), -objects[i].transform.localScale.z / 2);
+                edges[7] = objects[i].transform.position + new Vector3(objects[i].transform.localScale.x / 2, (objects[i].transform.localScale.y / 2+objects[i].transform.localScale.z*1.2f), objects[i].transform.localScale.z / 2);
+
+                for (int j = 0; j < edges.Length; j++)
+                {
+                    edges[j] = RotatePointAroundPivot(edges[j], objects[i].transform.position, objects[i].transform.eulerAngles);
+                    screenpositions[i*8+j] = cameras[1].WorldToScreenPoint(edges[j]);
+                    Debug.Log(screenpositions[i * 8 + j]);
+                }
+            }
+        }
+        else
+        {;}
 
         return screenpositions;
     }
