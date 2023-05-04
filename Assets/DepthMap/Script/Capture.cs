@@ -11,13 +11,16 @@ public class Capture : MonoBehaviour
 
     private string savePath = "D:/Data/Codes/UnitySyntheticData/Outs/";
     private string referenceDepthPath = "reference_depth/";
-    private string referenceRGBPath = "reference_rgb/";
-    private string queryRGBPath = "query_rgb/";
+    private string referenceRGBPath = "reference_image/";
+    private string queryRGBPath = "query_image/";
     private string referenceLabelPath = "reference_label/";
     private string imageFormat = ".png";
 
+    // private int width = 1280;
+    // private int height = 960;
+
     private int width = 1280;
-    private int height = 960;
+    private int height = 750;
 
     void Start()
     {

@@ -22,7 +22,8 @@ public class Creator : MonoBehaviour
 
     public void CreateDefects()
     {
-        int total_rot = Random.Range(0, 360);
+        // int total_rot = Random.Range(0, 360);
+        int total_rot = 0;
 
         int alumni_base_num = 24;
 
